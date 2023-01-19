@@ -1,17 +1,35 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { getMoviesByName } from 'components/services/getMovies';
 
 export const Movies = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [input, setInput] = useState('');
   const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    const getMovies = async () => {
+      const query = searchParams.get('query');
+      if (!query) {
+        setMovies([]);
+        return;
+      }
+      const movies = await getMoviesByName(query);
+      setMovies(movies);
+    };
+    getMovies();
+  }, [searchParams]);
 
   const handleChange = event => setInput(event.target.value);
 
   const handleSubmit = async event => {
     event.preventDefault();
-    const movies = await getMoviesByName(input);
-    setMovies(movies);
+    if (input.trim() === '') {
+      window.alert('Type the name of the movie!');
+      setInput('');
+      return;
+    }
+    setSearchParams({ query: input });
     setInput('');
   };
 
