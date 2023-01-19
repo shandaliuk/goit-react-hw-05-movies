@@ -1,3 +1,27 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { getTrendingMovies } from 'components/services/getMovies';
+
 export const Home = () => {
-  return <h1>Trending today</h1>;
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    const updateMovies = async () => {
+      const movies = await getTrendingMovies();
+      setMovies(movies);
+    };
+    updateMovies();
+  }, []);
+
+  return (
+    <main>
+      <ul>
+        {movies.map(movie => (
+          <li key={movie.id}>
+            <Link to={`movies/${movie.id}`}>{movie.title}</Link>
+          </li>
+        ))}
+      </ul>
+    </main>
+  );
 };
