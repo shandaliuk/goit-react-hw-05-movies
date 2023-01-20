@@ -7,7 +7,6 @@ export const Movie = () => {
   const [image, setImage] = useState('');
 
   const { movieId } = useParams();
-
   useEffect(() => {
     const getMovie = async () => {
       const movie = await getSingleMovie(movieId);

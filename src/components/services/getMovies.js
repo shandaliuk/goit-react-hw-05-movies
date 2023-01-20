@@ -21,10 +21,17 @@ export const getSingleMovie = async id => {
   return result.data;
 };
 
-export const getImageLink = async link => {
+export const getCast = async id => {
+  const result = await axios.get(`/movie/${id}/credits?api_key=${API_KEY}`);
+  return result.data.cast;
+};
+
+export const getImageLink = async () => {
   const config = await axios.get(`/configuration?api_key=${API_KEY}`);
   const { base_url, poster_sizes } = config.data.images;
   const posterSize = poster_sizes[poster_sizes.length - 1];
-  const imageLink = `${base_url}/${posterSize}${link}`;
+  const imageLink = `${base_url}${posterSize}`;
   return imageLink;
 };
+
+// createImageBaseLink

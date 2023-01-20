@@ -20,3 +20,5 @@ export const App = () => {
     </Routes>
   );
 };
+
+// Additional route for 404
