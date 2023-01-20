@@ -15,3 +15,16 @@ export const getMoviesByName = async query => {
   );
   return result.data.results;
 };
+
+export const getSingleMovie = async id => {
+  const result = await axios.get(`/movie/${id}?api_key=${API_KEY}`);
+  return result.data;
+};
+
+export const getImageLink = async link => {
+  const config = await axios.get(`/configuration?api_key=${API_KEY}`);
+  const { base_url, poster_sizes } = config.data.images;
+  const posterSize = poster_sizes[poster_sizes.length - 1];
+  const imageLink = `${base_url}/${posterSize}${link}`;
+  return imageLink;
+};
