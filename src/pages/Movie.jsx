@@ -1,18 +1,16 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, Outlet } from 'react-router-dom';
-import { getImageLink, getSingleMovie } from 'components/services/getMovies';
+import { useParams, useLocation, Link, Outlet } from 'react-router-dom';
+import { getSingleMovie } from 'components/services/getMovies';
 
-export const Movie = () => {
+export const Movie = ({ imageBaseLink }) => {
   const [movieInfo, setMovieInfo] = useState(null);
-  const [image, setImage] = useState('');
-
   const { movieId } = useParams();
+  const location = useLocation();
+
   useEffect(() => {
     const getMovie = async () => {
       const movie = await getSingleMovie(movieId);
-      const image = await getImageLink(movie.poster_path);
       setMovieInfo(movie);
-      setImage(image);
     };
     getMovie();
   }, [movieId]);
@@ -21,12 +19,18 @@ export const Movie = () => {
     return;
   }
 
-  const { title, vote_average, overview, genres } = movieInfo;
+  const { title, vote_average, overview, genres, poster_path } = movieInfo;
 
   return (
     <main>
-      <button type="button">Go back</button>
-      <img src={image} alt={`Movie ${title} poster`} width="250" />
+      <Link to={location.state?.from ?? '/'}>Go back</Link>
+      {poster_path && (
+        <img
+          src={`${imageBaseLink}${poster_path}`}
+          alt={`Movie ${title} poster`}
+          width="250"
+        />
+      )}
       <h2>{title}</h2>
       <p>User score: {Math.round(vote_average * 10)}%</p>
       <h3>Overview</h3>

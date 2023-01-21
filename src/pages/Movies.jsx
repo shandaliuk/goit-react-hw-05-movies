@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useLocation } from 'react-router-dom';
 import { getMoviesByName } from 'components/services/getMovies';
 
 export const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [input, setInput] = useState('');
   const [movies, setMovies] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     const getMovies = async () => {
@@ -47,7 +48,9 @@ export const Movies = () => {
       <ul>
         {movies.map(movie => (
           <li key={movie.id}>
-            <Link to={`movies/${movie.id}`}>{movie.title}</Link>
+            <Link to={`/movies/${movie.id}`} state={{ from: location }}>
+              {movie.title}
+            </Link>
           </li>
         ))}
       </ul>

@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getCast, getImageLink } from './services/getMovies';
+import { getCast } from './services/getMovies';
 
-export const Cast = () => {
+export const Cast = ({ imageBaseLink }) => {
   const [cast, setCast] = useState([]);
   const { movieId } = useParams();
-  const imageBaseLink = useRef('');
 
   useEffect(() => {
     const getActors = async () => {
@@ -15,21 +14,17 @@ export const Cast = () => {
     getActors();
   }, [movieId]);
 
-  useEffect(() => {
-    const getLink = async () => {
-      const link = await getImageLink();
-      imageBaseLink.current = link;
-    };
-    getLink();
-  }, [imageBaseLink]);
-
   return (
     <ul>
       {cast.map(actor => {
         return (
           <li key={actor.id}>
             <img
-              src={`${imageBaseLink.current}${actor.profile_path}`}
+              src={
+                actor.profile_path
+                  ? `${imageBaseLink}${actor.profile_path}`
+                  : 'https://img.icons8.com/ios/512/gender-neutral-user--v1.png'
+              }
               alt={actor.name}
               width="150"
             />
