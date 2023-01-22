@@ -1,6 +1,15 @@
 import { useState, useEffect } from 'react';
-import { Link, useSearchParams, useLocation } from 'react-router-dom';
-import { getMoviesByName } from 'components/services/getMovies';
+import { useSearchParams, useLocation } from 'react-router-dom';
+import { MdLocalMovies } from 'react-icons/md';
+import { getMoviesByName } from 'services/getMovies';
+import {
+  Input,
+  SubmitButton,
+  Form,
+  List,
+  ListLink,
+  Message,
+} from './Movies.styled';
 
 export const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -36,24 +45,31 @@ export const Movies = () => {
 
   return (
     <main>
-      <form onSubmit={handleSubmit}>
-        <input
+      <Form onSubmit={handleSubmit}>
+        <Input
           type="text"
           autoComplete="off"
           value={input}
           onChange={handleChange}
         />
-        <button type="submit">Submit</button>
-      </form>
-      <ul>
-        {movies.map(movie => (
-          <li key={movie.id}>
-            <Link to={`/movies/${movie.id}`} state={{ from: location }}>
-              {movie.title}
-            </Link>
-          </li>
-        ))}
-      </ul>
+        <SubmitButton type="submit">Submit</SubmitButton>
+      </Form>
+      {movies.length === 0 ? (
+        <Message>No movies found</Message>
+      ) : (
+        <List>
+          {movies.map(movie => (
+            <li key={movie.id}>
+              <ListLink to={`/movies/${movie.id}`} state={{ from: location }}>
+                <MdLocalMovies />
+                {movie.title}
+              </ListLink>
+            </li>
+          ))}
+        </List>
+      )}
     </main>
   );
 };
+
+// Поставити, що якщо нема фільма то тоді тікі показуємо

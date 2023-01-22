@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getCast } from './services/getMovies';
+import { getCast } from '../../services/getMovies';
+import { CastList, ListItem, Image } from './Cast.styled';
 
 export const Cast = ({ imageBaseLink }) => {
   const [cast, setCast] = useState([]);
@@ -15,11 +16,11 @@ export const Cast = ({ imageBaseLink }) => {
   }, [movieId]);
 
   return (
-    <ul>
+    <CastList>
       {cast.map(actor => {
         return (
-          <li key={actor.id}>
-            <img
+          <ListItem key={actor.id}>
+            <Image
               src={
                 actor.profile_path
                   ? `${imageBaseLink}${actor.profile_path}`
@@ -28,11 +29,13 @@ export const Cast = ({ imageBaseLink }) => {
               alt={actor.name}
               width="150"
             />
-            <h2>{actor.name}</h2>
-            <p>Character: {actor.character}</p>
-          </li>
+            <div>
+              <h2>{actor.name}</h2>
+              <p>Character: {actor.character}</p>
+            </div>
+          </ListItem>
         );
       })}
-    </ul>
+    </CastList>
   );
 };
