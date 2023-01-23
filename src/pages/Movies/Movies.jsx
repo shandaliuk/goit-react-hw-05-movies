@@ -12,9 +12,10 @@ import {
 } from './Movies.styled';
 
 export const Movies = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
   const [input, setInput] = useState('');
   const [movies, setMovies] = useState([]);
+  const [isSubmitted, setSubmission] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
 
   useEffect(() => {
@@ -40,6 +41,7 @@ export const Movies = () => {
       return;
     }
     setSearchParams({ query: input });
+    setSubmission(true);
     setInput('');
   };
 
@@ -54,7 +56,7 @@ export const Movies = () => {
         />
         <SubmitButton type="submit">Submit</SubmitButton>
       </Form>
-      {movies.length === 0 ? (
+      {isSubmitted && movies.length === 0 ? (
         <Message>No movies found</Message>
       ) : (
         <List>
