@@ -1,5 +1,7 @@
 import { ErrorMessage } from './Error.styled';
 
-export const Error = () => {
+const Error = () => {
   return <ErrorMessage>Page not found :(</ErrorMessage>;
 };
+
+export default Error;

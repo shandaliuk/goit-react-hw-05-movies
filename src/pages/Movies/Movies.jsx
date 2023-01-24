@@ -11,7 +11,7 @@ import {
   Message,
 } from './Movies.styled';
 
-export const Movies = () => {
+const Movies = () => {
   const [input, setInput] = useState('');
   const [movies, setMovies] = useState([]);
   const [isSubmitted, setSubmission] = useState(false);
@@ -74,4 +74,4 @@ export const Movies = () => {
   );
 };
 
-// Поставити, що якщо нема фільма то тоді тікі показуємо
+export default Movies;

@@ -1,13 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { SharedLayout } from './SharedLayout/SharedLayout';
-import { Home } from 'pages/Home/Home';
-import { Movies } from 'pages/Movies/Movies';
-import { Movie } from 'pages/Movie/Movie';
-import { Cast } from './Cast/Cast';
-import { Reviews } from './Reviews/Reviews';
-import { Error } from 'pages/Error/Error';
 import { createImageBaseLink } from '../services/getMovies';
+
+const SharedLayout = lazy(() => import('./SharedLayout/SharedLayout'));
+const Home = lazy(() => import('pages/Home/Home'));
+const Movies = lazy(() => import('pages/Movies/Movies'));
+const Movie = lazy(() => import('pages/Movie/Movie'));
+const Cast = lazy(() => import('./Cast/Cast'));
+const Reviews = lazy(() => import('./Reviews/Reviews'));
+const Error = lazy(() => import('pages/Error/Error'));
 
 export const App = () => {
   const [imageBaseLink, setImageBaseLink] = useState('');
@@ -21,7 +22,7 @@ export const App = () => {
   }, [imageBaseLink]);
 
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
@@ -39,6 +40,6 @@ export const App = () => {
           <Route path="*" element={<Error />}></Route>
         </Route>
       </Routes>
-    </>
+    </Suspense>
   );
 };

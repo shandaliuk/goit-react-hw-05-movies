@@ -3,7 +3,7 @@ import { RiMovie2Fill } from 'react-icons/ri';
 import { getTrendingMovies } from 'services/getMovies';
 import { List, ListLink } from './Home.styled';
 
-export const Home = () => {
+const Home = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -27,3 +27,5 @@ export const Home = () => {
     </List>
   );
 };
+
+export default Home;

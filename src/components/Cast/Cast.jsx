@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { getCast } from '../../services/getMovies';
 import { CastList, ListItem, Image } from './Cast.styled';
 
-export const Cast = ({ imageBaseLink }) => {
+const Cast = ({ imageBaseLink }) => {
   const [cast, setCast] = useState([]);
   const { movieId } = useParams();
 
@@ -39,3 +40,9 @@ export const Cast = ({ imageBaseLink }) => {
     </CastList>
   );
 };
+
+Cast.propTypes = {
+  imageBaseLink: PropTypes.string.isRequired,
+};
+
+export default Cast;

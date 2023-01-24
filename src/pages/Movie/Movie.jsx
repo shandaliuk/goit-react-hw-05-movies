@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import PropTypes from 'prop-types';
 import { useParams, useLocation, Outlet } from 'react-router-dom';
 import { getSingleMovie } from 'services/getMovies';
 import { IoMdArrowRoundBack } from 'react-icons/io';
@@ -11,7 +12,7 @@ import {
   Image,
 } from './Movie.styled';
 
-export const Movie = ({ imageBaseLink }) => {
+const Movie = ({ imageBaseLink }) => {
   const [movieInfo, setMovieInfo] = useState(null);
   const { movieId } = useParams();
   const location = useLocation();
@@ -70,7 +71,15 @@ export const Movie = ({ imageBaseLink }) => {
           </SiteLink>
         </li>
       </LinksList>
-      <Outlet />
+      <Suspense fallback={<div>Loading</div>}>
+        <Outlet />
+      </Suspense>
     </main>
   );
 };
+
+Movie.propTypes = {
+  imageBaseLink: PropTypes.string.isRequired,
+};
+
+export default Movie;
