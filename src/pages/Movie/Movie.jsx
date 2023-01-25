@@ -1,5 +1,4 @@
 import { useState, useEffect, Suspense } from 'react';
-import PropTypes from 'prop-types';
 import { useParams, useLocation, Outlet } from 'react-router-dom';
 import { getSingleMovie } from 'services/getMovies';
 import { IoMdArrowRoundBack } from 'react-icons/io';
@@ -12,7 +11,7 @@ import {
   Image,
 } from './Movie.styled';
 
-const Movie = ({ imageBaseLink }) => {
+const Movie = () => {
   const [movieInfo, setMovieInfo] = useState(null);
   const { movieId } = useParams();
   const location = useLocation();
@@ -40,7 +39,7 @@ const Movie = ({ imageBaseLink }) => {
       <MovieInfoWrapper>
         {poster_path && (
           <Image
-            src={`${imageBaseLink}${poster_path}`}
+            src={`https://image.tmdb.org/t/p/original${poster_path}`}
             alt={`Movie ${title} poster`}
             width="300"
           />
@@ -76,10 +75,6 @@ const Movie = ({ imageBaseLink }) => {
       </Suspense>
     </main>
   );
-};
-
-Movie.propTypes = {
-  imageBaseLink: PropTypes.string.isRequired,
 };
 
 export default Movie;

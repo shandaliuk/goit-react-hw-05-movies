@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import { getCast } from '../../services/getMovies';
 import { CastList, ListItem, Image } from './Cast.styled';
 
-const Cast = ({ imageBaseLink }) => {
+const Cast = () => {
   const [cast, setCast] = useState([]);
   const { movieId } = useParams();
 
@@ -24,7 +23,7 @@ const Cast = ({ imageBaseLink }) => {
             <Image
               src={
                 actor.profile_path
-                  ? `${imageBaseLink}${actor.profile_path}`
+                  ? `https://image.tmdb.org/t/p/original${actor.profile_path}`
                   : 'https://img.icons8.com/ios/512/gender-neutral-user--v1.png'
               }
               alt={actor.name}
@@ -39,10 +38,6 @@ const Cast = ({ imageBaseLink }) => {
       })}
     </CastList>
   );
-};
-
-Cast.propTypes = {
-  imageBaseLink: PropTypes.string.isRequired,
 };
 
 export default Cast;

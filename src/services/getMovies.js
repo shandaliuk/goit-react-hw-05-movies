@@ -4,14 +4,6 @@ axios.defaults.baseURL = 'https://api.themoviedb.org/3';
 
 const API_KEY = 'f482511e908c5491e9f1e2c33a3c3db7';
 
-export const createImageBaseLink = async () => {
-  const config = await axios.get(`/configuration?api_key=${API_KEY}`);
-  const { base_url, poster_sizes } = config.data.images;
-  const posterSize = poster_sizes[poster_sizes.length - 1];
-  const imageLink = `${base_url}${posterSize}`;
-  return imageLink;
-};
-
 export const getTrendingMovies = async () => {
   const result = await axios.get(`/trending/movie/day?api_key=${API_KEY}`);
   return result.data.results;
