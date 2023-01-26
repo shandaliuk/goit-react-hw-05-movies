@@ -35,5 +35,3 @@ const Reviews = () => {
 };
 
 export default Reviews;
-
-//Ready
